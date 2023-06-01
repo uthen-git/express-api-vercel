@@ -1,0 +1,8 @@
+{
+    "builds": [
+      { "src": "app.js", "use": "@cyclic/static" }
+    ],
+    "routes": [
+      { "src": "/.*", "dest": "app.js" }
+    ]
+  }
