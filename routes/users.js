@@ -5,10 +5,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const auth = require('./../middleware/auth');
 
-/* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
-});
 
 router.post("/register", async (req, res, next) => {
   try {
@@ -94,6 +90,51 @@ router.post("/login", async (req, res, next) => {
 
 router.post("/welcome",auth,(req, res) => {
   res.status(200).send('Welcome 🙏');
+})
+
+router.get('/', async (req, res, next) => {
+  try {
+      const UserFound = await User.find();
+      res.json(UserFound);
+  } catch (err) {
+      return next(err);
+  }
+})
+
+router.get('/:id', async (req, res, next) => {
+  try {
+      const UserFound = await User.findById(req.params.id);
+      res.json(UserFound);
+  } catch (err) {
+      return next(err);
+  }
+})
+
+router.post('/', async (req, res, next) => {
+  try {
+      const Usersaved = await User.create(req.body);
+      res.json(Usersaved);
+  } catch (err) {
+      return next(err);
+  }
+})
+
+router.put('/:id', async (req, res, next) => {
+  try {
+      const Usersaved = await User.findByIdAndUpdate(req.params.id, req.body);
+      res.json(Usersaved);
+  } catch (err) {
+      return next(err);
+  }
+})
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+      const Userdeleted = await User.findByIdAndDelete(req.params.id);
+      res.json(Userdeleted);
+  } catch (err) {
+      return next(err);
+  }
 })
 
 

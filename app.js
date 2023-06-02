@@ -14,6 +14,9 @@ var productsRouter = require('./routes/products');
 var quotationRouter = require('./routes/Quotations');
 var lessonRouter = require('./routes/lesson');
 var instantpaymentRouter = require('./routes/instantpayment');
+var expenseRouter = require('./routes/expense');
+var projectRouter = require('./routes/project');
+
 const cors = require('cors');
 
 
@@ -35,6 +38,9 @@ app.use('/products', productsRouter);
 app.use('/quotations', quotationRouter);
 app.use('/lessons', lessonRouter);
 app.use('/instantpayments', instantpaymentRouter);
+app.use('/projects', projectRouter);
+app.use('/expenses', expenseRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
