@@ -3,14 +3,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
+require('dotenv').config();
+require('./config/database').connect();
 
-
-mongoose.Promise - global.Promise
-
-mongoose.connect('mongodb+srv://uthendevelop:1234@cluster0.ftt3nvl.mongodb.net/?retryWrites=true&w=majority')
-  .then(() => console.log('connection successfully!'))
-  .catch((err) => console.log(err))
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
