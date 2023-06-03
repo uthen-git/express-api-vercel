@@ -47,13 +47,5 @@ router.delete('/:id', async (req, res, next) => {
     }
 })
 
-router.get('/expenseandproject', async (req, res, next) => {
-    try {
-        const ExpenseFound = await Expense.find().populate('Project');
-        res.json(ExpenseFound);
-    } catch (err) {
-        return next(err);
-    }
-})
 
 module.exports = router;
