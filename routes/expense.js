@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Expense = require('../models/expenses.js');
+const moment = require('moment');
 
 router.get('/', async (req, res, next) => {
     try {
@@ -21,7 +22,7 @@ router.get('/:year/:month', async (req, res, next) => {
         const ExpenseFound = await Expense.aggregate([
             {
                 $match:{
-                    date:{
+                    expense_date:{
                         $gte:startDate,
                         $lte:endDate
                     }
