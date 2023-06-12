@@ -38,7 +38,7 @@ router.post("/register", async (req, res, next) => {
       { user_id: user._id, email },
       process.env.TOKEN_KEY,
       {
-        expiresIn: "2h"
+        expiresIn: "1d"
       }
     )
 
@@ -71,7 +71,7 @@ router.post("/login", async (req, res, next) => {
         { user_id: user._id, email },
         process.env.TOKEN_KEY,
         {
-          expiresIn: "2h"
+          expiresIn: "1d"
         }
       )
 
@@ -101,7 +101,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id',auth, async (req, res, next) => {
   try {
       const UserFound = await User.findById(req.params.id);
       res.json(UserFound);
