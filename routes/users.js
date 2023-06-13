@@ -66,20 +66,27 @@ router.post("/login", async (req, res, next) => {
     // Validate if user exist
     const user = await User.findOne({ email });
     if (user && (await bcrypt.compare(password, user.password))) {
-      // create token
-      const token = jwt.sign(
-        { user_id: user._id, email },
-        process.env.TOKEN_KEY,
-        {
-          expiresIn: "1d"
-        }
-      )
-
-      //save token
-      user.token = token;
+      //role check
+      if (user.role == 'none') {
+        res.status(401)
+      } else {
+        // create token
+        const token = jwt.sign(
+          { user_id: user._id, email },
+          process.env.TOKEN_KEY,
+          {
+            expiresIn: "1d"
+          }
+        )
+        //save token
+        user.token = token;
+      }
 
       res.status(200).json(user);
     }
+
+
+
 
     res.status(400).send("Invalid Credentials")
 
@@ -88,52 +95,52 @@ router.post("/login", async (req, res, next) => {
   }
 })
 
-router.post("/welcome",auth,(req, res) => {
+router.post("/welcome", auth, (req, res) => {
   res.status(200).send('Welcome 🙏');
 })
 
 router.get('/', async (req, res, next) => {
   try {
-      const UserFound = await User.find();
-      res.json(UserFound);
+    const UserFound = await User.find();
+    res.json(UserFound);
   } catch (err) {
-      return next(err);
+    return next(err);
   }
 })
 
-router.get('/:id',auth, async (req, res, next) => {
+router.get('/:id', auth, async (req, res, next) => {
   try {
-      const UserFound = await User.findById(req.params.id);
-      res.json(UserFound);
+    const UserFound = await User.findById(req.params.id);
+    res.json(UserFound);
   } catch (err) {
-      return next(err);
+    return next(err);
   }
 })
 
 router.post('/', async (req, res, next) => {
   try {
-      const Usersaved = await User.create(req.body);
-      res.json(Usersaved);
+    const Usersaved = await User.create(req.body);
+    res.json(Usersaved);
   } catch (err) {
-      return next(err);
+    return next(err);
   }
 })
 
 router.put('/:id', async (req, res, next) => {
   try {
-      const Usersaved = await User.findByIdAndUpdate(req.params.id, req.body);
-      res.json(Usersaved);
+    const Usersaved = await User.findByIdAndUpdate(req.params.id, req.body);
+    res.json(Usersaved);
   } catch (err) {
-      return next(err);
+    return next(err);
   }
 })
 
 router.delete('/:id', async (req, res, next) => {
   try {
-      const Userdeleted = await User.findByIdAndDelete(req.params.id);
-      res.json(Userdeleted);
+    const Userdeleted = await User.findByIdAndDelete(req.params.id);
+    res.json(Userdeleted);
   } catch (err) {
-      return next(err);
+    return next(err);
   }
 })
 
