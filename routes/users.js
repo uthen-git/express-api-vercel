@@ -67,8 +67,10 @@ router.post("/login", async (req, res, next) => {
     const user = await User.findOne({ email });
     if (user && (await bcrypt.compare(password, user.password))) {
       //role check
-      if (user.role == 'none') {
-        res.status(401)
+      console.log(user.role)
+      if (user.role == "none") {
+
+        res.status(501).send("Invalid role");
       } else {
         // create token
         const token = jwt.sign(
@@ -80,15 +82,11 @@ router.post("/login", async (req, res, next) => {
         )
         //save token
         user.token = token;
+        res.status(200).json(user);
       }
-
-      res.status(200).json(user);
     }
 
-
-
-
-    res.status(400).send("Invalid Credentials")
+    res.status(400).send("Invalid Credentials");
 
   } catch (error) {
     console.log(error)
