@@ -15,7 +15,6 @@ var lessonRouter = require('./routes/lesson');
 var instantpaymentRouter = require('./routes/instantpayment');
 var expenseRouter = require('./routes/expense');
 var projectRouter = require('./routes/project');
-var imageprocess = require('./routes/imageprocess');
 
 
 const cors = require('cors');
@@ -41,7 +40,6 @@ app.use('/lessons', lessonRouter);
 app.use('/instantpayments', instantpaymentRouter);
 app.use('/projects', projectRouter);
 app.use('/expenses', expenseRouter);
-app.use('/imageprocess', imageprocess);
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
